@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import ColorCounter from "../components/ColorCounter";
 
 const color_increment = 10;
@@ -13,13 +13,31 @@ const SquareScreen = () => {
     // color === 'red', 'green', 'blue'
     // change === +10, -10
 
-    if (color === "red") {
-      if (red + change > 255 || red + change < 0) {
+    switch (color) {
+      case "red":
+        red + change > 255 || red + change < 0 ? null : setRed(red + change);
         return;
-      } else {
-        setRed(red + change);
-      }
+      case "green":
+        green + change > 255 || green + change < 0
+          ? null
+          : setGreen(green + change);
+        return;
+      case "blue":
+        blue + change > 255 || blue + change < 0
+          ? null
+          : setBlue(blue + change);
+        return;
+      default:
+        return;
     }
+
+    //  if (color === "red") {
+    //    if (red + change > 255 || red + change < 0) {
+    //      return;
+    //    } else {
+    //      setRed(red + change);
+    //    }
+    //  }
   };
 
   return (
@@ -30,20 +48,25 @@ const SquareScreen = () => {
         color="Red"
       />
       <ColorCounter
-        onIncrease={() => setGreen(green + color_increment)}
-        onDecrease={() => setGreen(green - color_increment)}
+        onIncrease={() => setColor("green", color_increment)}
+        onDecrease={() => setColor("green", -1 * color_increment)}
         color="Green"
       />
       <ColorCounter
-        onIncrease={() => setBlue(blue + color_increment)}
-        onDecrease={() => setBlue(blue - color_increment)}
+        onIncrease={() => setColor("blue", color_increment)}
+        onDecrease={() => setColor("blue", -1 * color_increment)}
         color="Blue"
       />
-
+      {/* <Button
+        title="Reset color"
+        onPress={() => {
+          setRed(red == 0);
+          console.log(red);
+        }}
+      ></Button> */}
       <View
         style={{
           height: 150,
-          width: 150,
           backgroundColor: `rgb(${red},${green},${blue})`,
         }}
       ></View>
